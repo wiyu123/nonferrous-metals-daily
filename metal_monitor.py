@@ -777,12 +777,23 @@ def fetch_kline_data(metal_cfg: dict, limit: int = 60) -> Optional[List[dict]]:
                 return data
         return None
 
+    # 单位修正系数
+    divisor = metal_cfg.get('price_divisor', 1)
+    multiplier = metal_cfg.get('price_multiplier', 1)
+
     # 1. 优先尝试新浪期货API
     if sina_code:
         logger.debug(f'  尝试新浪API: {sina_code}')
         data = fetch_sina_kline(sina_code, limit=limit)
         if data:
             logger.info(f'  [{symbol}] 新浪API成功, 获取 {len(data)} 条')
+            if divisor != 1 or multiplier != 1:
+                for d in data:
+                    d['close'] = d['close'] * multiplier / divisor
+                    d['open'] = d['open'] * multiplier / divisor
+                    d['high'] = d['high'] * multiplier / divisor
+                    d['low'] = d['low'] * multiplier / divisor
+                logger.info(f'  [{symbol}] 单位修正: *{multiplier}/÷{divisor}')
             return data
     else:
         logger.debug(f'  [{symbol}] 未配置新浪代码，跳过新浪API')
@@ -793,6 +804,13 @@ def fetch_kline_data(metal_cfg: dict, limit: int = 60) -> Optional[List[dict]]:
         data = fetch_eastmoney_kline(eastmoney_secid, limit=limit)
         if data:
             logger.info(f'  [{symbol}] 东方财富API成功, 获取 {len(data)} 条')
+            if divisor != 1 or multiplier != 1:
+                for d in data:
+                    d['close'] = d['close'] * multiplier / divisor
+                    d['open'] = d['open'] * multiplier / divisor
+                    d['high'] = d['high'] * multiplier / divisor
+                    d['low'] = d['low'] * multiplier / divisor
+                logger.info(f'  [{symbol}] 单位修正: *{multiplier}/÷{divisor}')
             return data
 
     # 3. 都失败了

@@ -98,6 +98,7 @@ metals:
   smm_url: https://hq.smm.cn/vanadium
   inventory: 五氧化二钒库存低位，片钒流通偏紧
   supply_demand: 全钒液流电池储能招标放量，螺纹钢新国标推钒需求增量，南非供给扰动频繁
+  price_multiplier: 10
 - name: 铂金
   symbol: PL
   sina_code: PL0
@@ -107,6 +108,7 @@ metals:
   smm_url: https://hq.smm.cn/platinum
   inventory: NYMEX铂库存低位，ETF持仓稳定
   supply_demand: 氢能电解槽/燃料电池催化剂需求，南非电力危机限产30%，汽车尾气催化(国六b)稳需求
+  price_divisor: 25
 - name: 锆
   symbol: ZR
   sina_code: null
