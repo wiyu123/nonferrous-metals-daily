@@ -1254,10 +1254,15 @@ def build_html_table(
     metals_data: list, short_period: int, long_period: int,
     table_title: str,
 ) -> str:
+    # 按5日涨跌幅倒序，其次10日涨跌幅倒序
+    sorted_data = sorted(
+        [m for m in metals_data if m.get('latest')],
+        key=lambda m: (m.get('change_5d') if m.get('change_5d') is not None else -999,
+                      m.get('change_short') if m.get('change_short') is not None else -999),
+        reverse=True
+    )
     rows_html = ''
-    for m in metals_data:
-        if not m.get('latest'):
-            continue
+    for m in sorted_data:
         latest = m['latest']
         chg_5d = m.get('change_5d')
         chg_short = m.get('change_short')
