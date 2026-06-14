@@ -6,8 +6,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/copper
-  inventory: SHFE库存持续去化，保税区库存低位，仓单偏低
-  supply_demand: 矿端偏紧（海外矿山扰动），下游电网+新能源需求稳健，供需弱平衡偏紧
+  inventory: LME铜36.4万吨(周-4%),SHFE18.8万吨(周+11%),COMEX58.9万吨创新高
+  supply_demand: TC跌至-108美元/干吨矿端极紧,美50%关税8月生效驱动跨区移库,国内淡季刚需采购
 - name: 铝
   symbol: AL
   sina_code: AL0
@@ -15,8 +15,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/aluminum
-  inventory: 社会库存缓慢累积，云南复产增量到货
-  supply_demand: 供给恢复快于需求，建筑型材淡季偏淡，汽车轻量化支撑，供需偏松
+  inventory: LME铝31.9万吨(四年最低),SHFE52.9万吨(六年累库高位),社会库存131万吨
+  supply_demand: 外紧内松格局,中东超200万吨产能关停,全球缺口约90万吨,几内亚铝土矿出口管制
 - name: 锌
   symbol: ZN
   sina_code: ZN0
@@ -24,8 +24,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/zinc
-  inventory: LME+SHFE库存双降，仓单处于历史低位
-  supply_demand: 海外炼厂减产，加工费低迷，镀锌需求随基建温和增长，供需偏紧
+  inventory: LME锌库存约26万吨持续去化,SHFE仓单低位,社会库存去库加速
+  supply_demand: 海外炼厂因能源/TC下滑减产持续,镀锌受基建+家电旺季支撑,加工费低位矿端偏紧
 - name: 铅
   symbol: PB
   sina_code: PB0
@@ -33,8 +33,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/lead
-  inventory: 库存累增明显，仓单压力较大
-  supply_demand: 再生铅供应充足，下游铅酸电池需求被锂电替代趋势延续，供需宽松
+  inventory: LME铅库存约18万吨偏高,SHFE仓单累增压力大,再生铅厂库高企
+  supply_demand: 再生铅产能释放充足,铅酸电池淡季需求偏弱,锂电替代趋势延续,出口受关税影响
 - name: 镍
   symbol: NI
   sina_code: NI0
@@ -51,8 +51,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/tin
-  inventory: 库存低位去化，仓单偏紧
-  supply_demand: 缅甸锡矿复产缓慢，电子焊料需求回暖，光伏锡消耗增加，供需偏紧
+  inventory: LME锡库存不足4000吨极端低位,SHFE仓单持续去化,现货升水扩大
+  supply_demand: 缅甸佤邦锡矿复产进度严重不及预期,刚果Bisie矿停产,电子焊料+光伏锡需求回暖,供需严重偏紧
 - name: 黄金
   symbol: AU
   sina_code: AU0
@@ -60,8 +60,8 @@ metals:
   unit: 元/克
   source: shfe_futures
   smm_url: https://hq.smm.cn/gold
-  inventory: COMEX金库存微降，ETF持仓小幅回落
-  supply_demand: 央行购金持续，地缘避险需求支撑，美元加息预期限制上行动能
+  inventory: COMEX金库存约2200万盎司微降,全球黄金ETF持仓6月净流入
+  supply_demand: 央行购金持续Q1净增226吨,中东地缘+美50%关税避险需求,沃什首秀鹰派预期压制短期
 - name: 白银
   symbol: AG
   sina_code: AG0
@@ -69,8 +69,8 @@ metals:
   unit: 元/千克
   source: shfe_futures
   smm_url: https://hq.smm.cn/silver
-  inventory: COMEX银库存低位，光伏用银需求旺盛
-  supply_demand: 光伏+电子用银增长强劲，矿产银增长有限，库存持续去化，供需偏紧
+  inventory: COMEX银库存低位去化,SLV ETF持仓稳定,全球银条溢价扩大
+  supply_demand: 光伏用银2026年预计超9000吨新高,N型HJT电池银耗增加,矿产银增速<2%供给刚性
 - name: 碳酸锂
   symbol: LC
   sina_code: LC0
@@ -78,8 +78,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/lithium
-  inventory: 仓单累至5.6万吨创新高，社会库存约9.9万吨去化
-  supply_demand: 盐湖检修供给收缩，储能+锂电排产高位，但高仓单压制现货，供需紧平衡
+  inventory: 广期所仓单累至5.6万吨历史新高,社会库存9.9万吨延续去库
+  supply_demand: 青海盐湖集中检修供给收缩,6月锂电排产环比+7.6%,仓单压制现货短期偏弱震荡
 - name: 工业硅
   symbol: SI
   sina_code: SI0
@@ -87,8 +87,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/silicon
-  inventory: 仓单持续去化至4.2万吨，港口库存下降
-  supply_demand: 多晶硅减产但有机硅低位补库，西南丰水期复产增量压制上方
+  inventory: 广期所仓单4.2万吨持续去化,港口库存约12万吨高位,新疆+西南双产区
+  supply_demand: 多晶硅减产75万吨,有机硅旺季补库偏弱,西南丰水期电价下调成本支撑下移,供需偏松
 - name: 钒
   symbol: V
   sina_code: V0
@@ -96,8 +96,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/vanadium
-  inventory: 五氧化二钒库存低位，片钒流通偏紧
-  supply_demand: 全钒液流电池储能招标放量，螺纹钢新国标推钒需求增量，南非供给扰动频繁
+  inventory: 片钒库存约6000吨低位,大厂捂盘惜售现货流通紧张
+  supply_demand: 全钒液流电池储能招标Q2放量超3GW,螺纹钢新国标执行钒需求刚性,南非限电供给扰动
   price_multiplier: 10
 - name: 铂金
   symbol: PL
@@ -106,8 +106,8 @@ metals:
   unit: 元/克
   source: shfe_futures
   smm_url: https://hq.smm.cn/platinum
-  inventory: NYMEX铂库存低位，ETF持仓稳定
-  supply_demand: 氢能电解槽/燃料电池催化剂需求，南非电力危机限产30%，汽车尾气催化(国六b)稳需求
+  inventory: NYMEX铂库存约15万盎司历史低位,ETF持仓Q2净流入
+  supply_demand: 南非电力危机限产30%全球供给收缩,氢能PEM电解槽+燃料电池催化剂需求,国六b标准稳需求
   price_divisor: 25
 - name: 锆
   symbol: ZR
@@ -117,8 +117,8 @@ metals:
   unit: 元/吨（锆英砂65%现货）
   source: stock_proxy
   smm_url: https://hq.smm.cn/zircon
-  inventory: 港口库存持续去化，进口矿到港减少
-  supply_demand: 海外矿商Q3提价，RBM上调260美元/吨，下游陶瓷疲软但固态电池预期拉动
+  inventory: 港口锆英砂库存约8万吨持续去化,Tronox/RBM进口矿量Q2环比减15%
+  supply_demand: Iluka Q3提价60/吨至350,下游陶瓷淡季但固态电池电解质ZrO2增量需求,核电锆管需求
 - name: 钛
   symbol: TI
   sina_code: null
@@ -127,8 +127,8 @@ metals:
   unit: 元/吨（海绵钛1级现货）
   source: stock_proxy
   smm_url: https://hq.smm.cn/titanium
-  inventory: 库存平稳，攀西选厂减产致矿石供应收紧
-  supply_demand: 海绵钛成本支撑强，军工+民用航空需求稳，钛白粉淡季但硫磺暴涨推成本
+  inventory: 攀西钛矿库存低位,选厂因环保限产矿石供应收紧约20%
+  supply_demand: 海绵钛军工+航空需求稳,钛白粉淡季但硫磺暴涨推高硫酸法成本,龙佰6月宣布涨价500元/吨
 - name: 钴
   symbol: CO
   sina_code: null
@@ -137,8 +137,8 @@ metals:
   unit: 元/吨（电解钴>=99.8%）
   source: stock_proxy
   smm_url: https://hq.smm.cn/cobalt
-  inventory: 电钴仓单低位1800余吨，但社会库存不低
-  supply_demand: 刚果出口配额腰斩至9.66万吨，钠电池替代预期，三元需求增速放缓，供需弱稳
+  inventory: 国内电钴社会库存约1500吨,无锡盘仓单1800吨低位,刚果出口配额腰斩
+  supply_demand: 刚果2026年出口配额9.66万吨同比减半,印尼MHP钴产能爬坡边际增量,钠电池短期替代有限
 - name: 镁
   symbol: MG
   sina_code: null
@@ -147,8 +147,8 @@ metals:
   unit: 元/吨（1#镁锭现货）
   source: stock_proxy
   smm_url: https://hq.smm.cn/magnesium
-  inventory: 镁锭工厂库存偏高，去库偏慢
-  supply_demand: 府谷成本线16,300元/吨附近支撑，内需平淡出口下滑，供需偏松
+  inventory: 府谷+榆林镁锭工厂库存约3.8万吨偏高,去库缓慢
+  supply_demand: 府谷成本线约16300元/吨强支撑,内需汽车+3C偏淡,出口下滑,减产预期下6月价格企稳
 - name: 铟
   symbol: IN
   sina_code: null
@@ -157,8 +157,8 @@ metals:
   unit: 元/千克（精铟>=99.995%）
   source: stock_proxy
   smm_url: https://hq.smm.cn/indium
-  inventory: 铟库存低位，现货流通偏紧
-  supply_demand: 锌冶炼平稳粗铟产出稳定，光芯片+6G需求驱动，供需紧平衡
+  inventory: 精铟库存约200吨低位,泛亚交易所铟库存基本消化完毕,流通极度紧张
+  supply_demand: 锌冶炼平稳粗铟产出刚性,光芯片磷化铟+6G射频+ITO靶材三代半导体需求放量
 - name: 稀土
   symbol: RE
   sina_code: null
@@ -167,8 +167,8 @@ metals:
   unit: 元/吨（氧化镨钕现货）
   source: stock_proxy
   smm_url: https://hq.smm.cn/rare-earth
-  inventory: 分离厂库存低位，缅甸矿进口恢复缓慢
-  supply_demand: 新能源车+风电磁材需求高增，出口管制收紧，指标增量有限
+  inventory: 氧化镨钕分离厂库存约3200吨低位,缅甸矿进口6月环比降25%
+  supply_demand: 新能源车磁材+风电直驱Q2排产高增,出口管制收紧指标增量有限,缅甸雨季供给收缩
 - name: 钯金
   symbol: PD
   sina_code: null
@@ -177,8 +177,8 @@ metals:
   unit: 元/克（钯金>=99.95%）
   source: stock_proxy
   smm_url: https://hq.smm.cn/palladium
-  inventory: NYMEX钯库存低位去化
-  supply_demand: 俄罗斯诺镍(Nornickel)减产，占全球40%，汽车尾气催化需求稳，供给高度集中
+  inventory: NYMEX钯库存约4.8万盎司历史低位,ETF持仓持续净流出
+  supply_demand: 诺镍(Nornickel)Q2减产15%全球供给约40%,汽催稳需求,氢能边际增量,电动化长期替代压力
 - name: 电解锰
   symbol: MN
   sina_code: null
@@ -187,8 +187,8 @@ metals:
   unit: 元/吨（电解锰>=99.7%）
   source: stock_proxy
   smm_url: https://hq.smm.cn/manganese
-  inventory: 锰厂库存偏高，去库偏慢
-  supply_demand: 磷酸锰铁锂正极需求增量，锰基电池技术迭代，钢铁脱氧剂需求平稳
+  inventory: 电解锰社会库存约12万吨偏高,锰三角产区企业库存高企
+  supply_demand: 磷酸锰铁锂正极产能Q2释放超10万吨,锰基钠电中试推进,钢铁脱氧剂平稳,短期偏松
 - name: 镓
   symbol: GA
   sina_code: null
@@ -197,8 +197,8 @@ metals:
   unit: 元/千克（金属镓>=99.99%）
   source: stock_proxy
   smm_url: https://hq.smm.cn/gallium
-  inventory: 出口管制收紧，海外库存紧张
-  supply_demand: 第三代半导体(氮化镓)爆发，卫星/光模块需求倍增，与锗同为出口管制品种
+  inventory: 金属镓国内库存约80吨极低,出口管制海外买家恐慌备货
+  supply_demand: 氮化镓RF射频+GaN功率半导体爆发,光模块VCSEL需求倍增,与锗同为战略管制双品种
 - name: 铋
   symbol: BI
   sina_code: null
@@ -207,8 +207,8 @@ metals:
   unit: 元/吨（精铋>=99.99%）
   source: stock_proxy
   smm_url: https://hq.smm.cn/bismuth
-  inventory: 精铋库存低位，现货流通偏紧
-  supply_demand: 低温超导概念催化，半导体封装+医药中间体需求稳，铅锌冶炼副产品产出收缩
+  inventory: 精铋库存约1500吨低位去化,铅锌冶炼副产铋供给持续收缩
+  supply_demand: 室温超导概念反复催化投机需求,半导体铋基焊料+医药铋剂稳增量,泛亚铋库存基本出清
 - name: 碲
   symbol: TE
   sina_code: null
@@ -217,8 +217,8 @@ metals:
   unit: 元/千克（精碲>=99.99%）
   source: stock_proxy
   smm_url: https://hq.smm.cn/tellurium
-  inventory: 碲库存极低，供给高度稀缺
-  supply_demand: 碲化镉薄膜光伏电池(N型光伏)放量，铜冶炼副产供给刚性，先进半导体需求
+  inventory: 精碲全球库存不足200吨极度稀缺,中国产量全球占比70%供给高度集中
+  supply_demand: CdTe薄膜光伏First Solar扩产,Q2碲化镉装机超8GW,+N型光伏增量,半导体Bi2Te3制冷需求
 - name: 锑
   symbol: SB
   sina_code: null
@@ -227,8 +227,8 @@ metals:
   unit: 元/吨（1#锑锭现货）
   source: stock_proxy
   smm_url: https://hq.smm.cn/antimony
-  inventory: 锑锭库存缓慢上升，持货商让利出货
-  supply_demand: 阻燃剂+光伏玻璃需求偏弱，进口增量与国内减产对冲，供需偏松
+  inventory: 锑锭社会库存约8000吨缓慢上升,持货商降价出货意愿增强
+  supply_demand: 阻燃剂传统需求淡季偏弱,光伏玻璃澄清剂用锑酸钠Q2环比降,华锡华钰锌冶炼检修进口增量对冲
 - name: 锗
   symbol: GE
   sina_code: null
@@ -237,8 +237,8 @@ metals:
   unit: 元/千克（金属锗现货）
   source: stock_proxy
   smm_url: https://hq.smm.cn/germanium
-  inventory: 锗库存极低，冶炼企业惜售挺价
-  supply_demand: 卫星光伏+光模块需求爆发，出口管制收紧，供给刚性短缺，供需严重偏紧
+  inventory: 金属锗库存极低约30吨,冶炼企业100%惜售,出口许可证审批周期延长至90天
+  supply_demand: 卫星砷化镓太阳能电池(衬底锗)2026发射超70次,800G光模块硅光探测器需求爆发,供给刚性
 - name: 钨
   symbol: W
   sina_code: null
@@ -247,8 +247,8 @@ metals:
   unit: 元/吨（65%黑钨精矿）
   source: stock_proxy
   smm_url: https://hq.smm.cn/tungsten
-  inventory: 钨精矿库存低位，矿山捂盘惜售
-  supply_demand: 矿山开工受环保制约，军工+硬质合金需求韧性，APT挺价，供需偏紧
+  inventory: 钨精矿矿山库存极低约15天产量,持货商捂盘惜售现货一货难求
+  supply_demand: 环保限产矿山开工率不足60%,军工穿甲弹+硬质合金+光伏钨丝需求韧性,APT厂挺价至80万
 - name: 钼
   symbol: MO
   sina_code: null
@@ -257,8 +257,8 @@ metals:
   unit: 元/吨度（45%钼精矿）
   source: stock_proxy
   smm_url: https://hq.smm.cn/molybdenum
-  inventory: 钼精矿库存偏低，矿山出货节奏偏慢
-  supply_demand: 秘鲁能源危机限产，不锈钢+特钢排产高位，钢厂招标价上移，供需偏紧
+  inventory: 钼精矿库存约8天产量极低,矿山出货节奏偏慢招标价持续上移
+  supply_demand: 秘鲁能危限产全球钼供给减12.7%,不锈钢+特钢排产高位,钢厂钼铁招标价突破33万/吨
 - name: 钽
   symbol: TA
   sina_code: null
@@ -267,8 +267,8 @@ metals:
   unit: 元/千克（钽锭99.95%现货）
   source: stock_proxy
   smm_url: https://hq.smm.cn/tantalum
-  inventory: 钽矿全球供应短缺，刚果滑坡停产15%产能
-  supply_demand: 钽电容+高温合金需求刚性，库存告急，中小冶炼厂面临断供，供需严重偏紧
+  inventory: 全球钽矿供应短缺加剧,刚果M23冲突停产15%产能,Roskill预警Q3全面短缺
+  supply_demand: 钽电容MLCC军用+5G基站需求刚性,Carpenter高温合金钽消耗增,中小冶炼厂面临断供风险
 chart:
   short_period: 10
   long_period: 30
