@@ -1101,9 +1101,8 @@ def generate_comparison_charts_grouped(
 
     files = []
     n_groups = (len(valid) + group_size - 1) // group_size
-    colors = ['#E74C3C','#3498DB','#2ECC71','#F39C12','#9B59B6',
-              '#1ABC9C','#E67E22','#2980B9','#27AE60','#8E44AD',
-              '#D35400','#16A085','#C0392B']
+    colors = ['#E74C3C','#2E86C1','#F39C12','#8E44AD','#17A589','#E91E63',
+              '#D35400','#2980B9','#27AE60','#9B59B6','#1ABC9C','#C0392B']
 
     for gi in range(n_groups):
         chunk = valid[gi * group_size:(gi + 1) * group_size]
