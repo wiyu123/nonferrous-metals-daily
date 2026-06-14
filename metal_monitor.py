@@ -1369,7 +1369,7 @@ def build_email_html(
     comparison_cid_files = []  # [(cid, filepath)] for send_email
 
     if comparison_b64_list_a:
-        comparison_section += '<h3 style="color:#2c3e50;border-left:4px solid #3498db;padding-left:10px">\U0001f4c8 A组：期货品种走势对比（基准日=100）</h3>'
+        comparison_section += '<h3 style="color:#2c3e50;border-left:4px solid #3498db;padding-left:10px">\U0001f4c8 A组：传统有色金属走势对比（基准日=100）</h3>'
         for idx in range(len(comparison_b64_list_a)):
             cid = 'cmp_a_%d@chart' % (idx+1)
             label = '[%d/%d]' % (idx+1, len(comparison_b64_list_a))
