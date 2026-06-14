@@ -1342,28 +1342,18 @@ def build_email_html(
     comparison_section = ''
 
     if comparison_b64_list_a:
-        comparison_section += '<h3 style="color:#2c3e50;border-left:4px solid #3498db;padding-left:10px">\U0001f4c8 A组：期货品种走势对比（基准日=100，每图最多5个）</h3>'
-        for idx, b64 in enumerate(comparison_b64_list_a):
-            label = '[%s/%s]' % (idx+1, len(comparison_b64_list_a))
-            comparison_section += '''
-        <p style="font-size:12px;color:#888;margin:5px 0 2px 0">%s</p>
-        <img src="data:image/png;base64,%s"
-             style="max-width:100%%;border:1px solid #ddd;border-radius:4px;
-                    margin:5px 0 10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1)"
-             alt="A组走势对比图" />
-        ''' % (label, b64)
+        comparison_section += (
+            '<h3 style="color:#2c3e50;border-left:4px solid #3498db;padding-left:10px">'
+            '\U0001f4c8 A组：期货品种走势对比</h3>'
+            '<p style="font-size:12px;color:#888">（共 %s 张走势对比图，详见附件）</p>'
+        ) % len(comparison_b64_list_a)
 
     if comparison_b64_list_b:
-        comparison_section += '<h3 style="color:#2c3e50;border-left:4px solid #E67E22;padding-left:10px">\U0001f4c8 B组：稀缺小金属走势对比（基准日=100，每图最多5个）</h3>'
-        for idx, b64 in enumerate(comparison_b64_list_b):
-            label = '[%s/%s]' % (idx+1, len(comparison_b64_list_b))
-            comparison_section += '''
-        <p style="font-size:12px;color:#888;margin:5px 0 2px 0">%s</p>
-        <img src="data:image/png;base64,%s"
-             style="max-width:100%%;border:1px solid #ddd;border-radius:4px;
-                    margin:5px 0 10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1)"
-             alt="B组走势对比图" />
-        ''' % (label, b64)
+        comparison_section += (
+            '<h3 style="color:#2c3e50;border-left:4px solid #E67E22;padding-left:10px">'
+            '\U0001f4c8 B组：稀缺小金属走势对比</h3>'
+            '<p style="font-size:12px;color:#888">（共 %s 张走势对比图，详见附件）</p>'
+        ) % len(comparison_b64_list_b)
 
     up_count = sum(1 for m in metals_data
                    if (m.get('change_short') or 0) > 0)
@@ -1488,9 +1478,10 @@ def send_email(
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = ', '.join(recipients)
-    msg['Date'] = datetime.now().strftime(
-        '%a, %d %b %Y %H:%M:%S +0800'
-    )
+    msg['Date'] = datetime.now().strftime('%a, %d %b %Y %H:%M:%S +0800')
+    msg['Message-ID'] = f'<metals-{datetime.now().strftime("%Y%m%d%H%M%S")}@{sender.split("@")[-1]}>'
+    msg['X-Priority'] = '3'
+    msg['X-Mailer'] = 'Metals Daily Reporter'
 
     # HTML正文
     html_part = MIMEMultipart('related')
