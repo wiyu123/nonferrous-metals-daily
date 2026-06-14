@@ -42,6 +42,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -1471,110 +1472,132 @@ def load_recipients_from_csv(csv_path: Path) -> List[str]:
     return result
 
 
+def _build_email_message(sender, recipient, subject, html_content, inline_cid_files, attachments):
+    """为一个收件人构建MIME邮件。"""
+    msg = MIMEMultipart('mixed')
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = recipient
+    msg['Date'] = datetime.now().strftime('%a, %d %b %Y %H:%M:%S +0800')
+    msg['Message-ID'] = '<metals-%s-%04x@%s>' % (
+        datetime.now().strftime('%Y%m%d%H%M%S%f'),
+        hash(recipient) & 0xffff,
+        sender.split('@')[-1]
+    )
+    msg['X-Priority'] = '3'
+    msg['X-Mailer'] = 'Metals Daily Reporter'
+
+    html_part = MIMEMultipart('related')
+    cids_used = set()
+    for cid, b64, fname in inline_cid_files:
+        if cid in cids_used:
+            continue
+        cids_used.add(cid)
+        try:
+            img = MIMEImage(base64.b64decode(b64), _subtype='png')
+            img.add_header('Content-ID', '<%s>' % cid)
+            img.add_header('Content-Disposition', 'inline', filename=fname)
+            html_part.attach(img)
+        except Exception:
+            pass
+
+    html_part.attach(MIMEText(html_content, 'html', 'utf-8'))
+    msg.attach(html_part)
+
+    for filepath in attachments:
+        if filepath and filepath.exists():
+            with open(filepath, 'rb') as f:
+                at = MIMEBase('application', 'octet-stream')
+                at.set_payload(f.read())
+                encoders.encode_base64(at)
+                at.add_header('Content-Disposition', 'attachment',
+                             filename=('utf-8', '', filepath.name))
+                msg.attach(at)
+    return msg
+
+
+def _send_one(smtp_server, smtp_port, use_ssl, sender, password,
+              recipient, subject, html_content, inline_cid_files, attachments):
+    """发邮件给一个人，返回 (recipient, ok=True or error_msg)。"""
+    try:
+        msg = _build_email_message(sender, recipient, subject, html_content,
+                                   inline_cid_files, attachments)
+        if use_ssl:
+            server = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=30)
+        else:
+            server = smtplib.SMTP(smtp_server, smtp_port, timeout=30)
+            server.starttls()
+        server.login(sender, password)
+        server.sendmail(sender, [recipient], msg.as_string())
+        server.quit()
+        return (recipient, True)
+    except smtplib.SMTPAuthenticationError:
+        return (recipient, 'AUTH-FAIL')
+    except smtplib.SMTPConnectError:
+        return (recipient, 'CONNECT-FAIL')
+    except Exception as e:
+        return (recipient, str(e)[:80])
+
+
 def send_email(
     config: dict,
     html_content: str,
     attachments: List[Path],
     font: FontProperties,
 ) -> bool:
-    """发送HTML邮件（含附件）。GitHub Actions环境变量优先于配置文件。"""
+    """多线程、每人单封、并行发送。"""
     email_cfg = config.get('email', {})
     if not email_cfg:
-        logger.warning('邮件配置为空，跳过发送')
+        logger.warning('Skipping: no email config')
         return False
 
-    # 环境变量优先（GitHub Secrets），回退配置文件
     sender = os.getenv('SMTP_USER', email_cfg.get('sender', ''))
     password = os.getenv('SMTP_PASS', email_cfg.get('password', ''))
     smtp_server = os.getenv('SMTP_HOST', email_cfg.get('smtp_server', 'smtp.qq.com'))
     smtp_port = int(os.getenv('SMTP_PORT', email_cfg.get('smtp_port', 465)))
     use_ssl = os.getenv('SMTP_SSL', str(email_cfg.get('use_ssl', True))).lower() == 'true'
 
-    # 从CSV加载收件人（优先），回退到config中的recipients
     csv_path = BASE_DIR / 'recipients.csv'
     recipients = load_recipients_from_csv(csv_path)
     if not recipients:
         recipients = email_cfg.get('recipients', [])
-    subject_prefix = email_cfg.get(
-        'subject_prefix', '【有色金属价格监控】'
-    )
+
+    subject_prefix = email_cfg.get('subject_prefix', '【有色金属行业动态】')
+    subject = '%s%s' % (subject_prefix, datetime.now().strftime('%Y-%m-%d'))
 
     if not sender or not password:
-        logger.error('邮件发送方或密码未配置')
+        logger.error('SMTP credentials missing')
         return False
     if not recipients:
-        logger.error('邮件收件人未配置')
+        logger.error('No recipients')
         return False
 
-    now_str = datetime.now().strftime('%Y-%m-%d')
-    subject = f'{subject_prefix}{now_str}'
+    total = len(recipients)
+    logger.info('Sending %d emails (parallel, one per recipient) ...' % total)
+    ok = 0
+    fail = 0
+    max_w = min(total, 20)
 
-    msg = MIMEMultipart('mixed')
-    msg['Subject'] = subject
-    msg['From'] = sender
-    msg['To'] = ', '.join(recipients)
-    msg['Date'] = datetime.now().strftime('%a, %d %b %Y %H:%M:%S +0800')
-    msg['Message-ID'] = f'<metals-{datetime.now().strftime("%Y%m%d%H%M%S")}@{sender.split("@")[-1]}>'
-    msg['X-Priority'] = '3'
-    msg['X-Mailer'] = 'Metals Daily Reporter'
+    with ThreadPoolExecutor(max_workers=max_w) as ex:
+        futures = {}
+        for r in recipients:
+            fu = ex.submit(
+                _send_one,
+                smtp_server, smtp_port, use_ssl, sender, password,
+                r, subject, html_content, _COMPARISON_CID_FILES, attachments
+            )
+            futures[fu] = r
 
-    # HTML正文 with CID inline images
-    html_part = MIMEMultipart('related')
+        for fu in as_completed(futures):
+            addr, result = fu.result()
+            if result is True:
+                ok += 1
+            else:
+                fail += 1
+                logger.warning('  FAIL %s: %s' % (addr, result))
 
-    # Rebuild comparison images as CID inline from _COMPARISON_CID_FILES
-    cids_used = set()
-    for cid, b64, fname in _COMPARISON_CID_FILES:
-        if cid in cids_used:
-            continue
-        cids_used.add(cid)
-        try:
-            img_data = base64.b64decode(b64)
-            img = MIMEImage(img_data, _subtype='png')
-            img.add_header('Content-ID', f'<{cid}>')
-            img.add_header('Content-Disposition', 'inline', filename=fname)
-            html_part.attach(img)
-        except Exception:
-            pass  # skip broken b64
-
-    html_part.attach(MIMEText(html_content, 'html', 'utf-8'))
-    msg.attach(html_part)
-
-    # Regular attachments (chart PNGs for download)
-    for filepath in attachments:
-        if filepath and filepath.exists():
-            with open(filepath, 'rb') as f:
-                attachment = MIMEBase('application', 'octet-stream')
-                attachment.set_payload(f.read())
-                encoders.encode_base64(attachment)
-                attachment.add_header(
-                    'Content-Disposition', 'attachment',
-                    filename=('utf-8', '', filepath.name)
-                )
-                msg.attach(attachment)
-
-    try:
-        if use_ssl:
-            server = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=30)
-        else:
-            server = smtplib.SMTP(smtp_server, smtp_port, timeout=30)
-            server.starttls()
-
-        server.login(sender, password)
-        server.sendmail(sender, recipients, msg.as_string())
-        server.quit()
-
-        logger.info(f'邮件发送成功 -> {", ".join(recipients)}')
-        return True
-
-    except smtplib.SMTPAuthenticationError:
-        logger.error('SMTP认证失败，请检查邮箱地址和授权码')
-        return False
-    except smtplib.SMTPConnectError:
-        logger.error(f'无法连接到SMTP服务器 {smtp_server}:{smtp_port}')
-        return False
-    except Exception as e:
-        logger.error(f'邮件发送失败: {e}')
-        return False
+    logger.info('Done: %d/%d sent OK, %d failed' % (ok, total, fail))
+    return ok > 0
 
 
 # ============================================================
