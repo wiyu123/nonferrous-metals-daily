@@ -1134,6 +1134,10 @@ def generate_comparison_charts_grouped(
     return files
 
 
+# CID image tracking for send_email
+_COMPARISON_CID_FILES = []
+
+
 # ============================================================
 # 邮件发送模块
 # ============================================================
@@ -1335,23 +1339,34 @@ def build_email_html(
         small_note = ''
 
     # 市场概览
+    _COMPARISON_CID_FILES.clear()
     overview_html = _gen_overview(metals_data)
 
     comparison_section = ''
 
+    comparison_cid_files = []  # [(cid, filepath)] for send_email
+
     if comparison_b64_list_a:
         comparison_section += '<h3 style="color:#2c3e50;border-left:4px solid #3498db;padding-left:10px">\U0001f4c8 A组：期货品种走势对比（基准日=100）</h3>'
-        for idx, b64 in enumerate(comparison_b64_list_a):
-            label = '[%s/%s]' % (idx+1, len(comparison_b64_list_a))
-            comparison_section += '<p style="font-size:12px;color:#888;margin:5px 0 2px 0">%s</p>' % label
-            comparison_section += '<img src="data:image/png;base64,%s" style="max-width:100%%;border:1px solid #ddd;border-radius:4px;margin:5px 0 10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1)" alt="A组走势对比图" />' % b64
+        for idx in range(len(comparison_b64_list_a)):
+            cid = 'cmp_a_%d@chart' % (idx+1)
+            label = '[%d/%d]' % (idx+1, len(comparison_b64_list_a))
+            comparison_section += ('<p style="font-size:12px;color:#888;margin:5px 0 2px 0">%s</p>'
+                                  '<img src="cid:%s" style="max-width:100%%;border:1px solid #ddd;border-radius:4px;margin:5px 0 10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1)" alt="A组走势对比图" />') % (label, cid)
+            data = (cid, comparison_b64_list_a[idx], 'cmp_a_%d.png' % (idx+1))
+            comparison_cid_files.append(data)
+            _COMPARISON_CID_FILES.append(data)
 
     if comparison_b64_list_b:
         comparison_section += '<h3 style="color:#2c3e50;border-left:4px solid #E67E22;padding-left:10px">\U0001f4c8 B组：稀缺小金属走势对比（基准日=100）</h3>'
-        for idx, b64 in enumerate(comparison_b64_list_b):
-            label = '[%s/%s]' % (idx+1, len(comparison_b64_list_b))
-            comparison_section += '<p style="font-size:12px;color:#888;margin:5px 0 2px 0">%s</p>' % label
-            comparison_section += '<img src="data:image/png;base64,%s" style="max-width:100%%;border:1px solid #ddd;border-radius:4px;margin:5px 0 10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1)" alt="B组走势对比图" />' % b64
+        for idx in range(len(comparison_b64_list_b)):
+            cid = 'cmp_b_%d@chart' % (idx+1)
+            label = '[%d/%d]' % (idx+1, len(comparison_b64_list_b))
+            comparison_section += ('<p style="font-size:12px;color:#888;margin:5px 0 2px 0">%s</p>'
+                                  '<img src="cid:%s" style="max-width:100%%;border:1px solid #ddd;border-radius:4px;margin:5px 0 10px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1)" alt="B组走势对比图" />') % (label, cid)
+            data = (cid, comparison_b64_list_b[idx], 'cmp_b_%d.png' % (idx+1))
+            comparison_cid_files.append(data)
+            _COMPARISON_CID_FILES.append(data)
 
     up_count = sum(1 for m in metals_data
                    if (m.get('change_short') or 0) > 0)
@@ -1481,12 +1496,28 @@ def send_email(
     msg['X-Priority'] = '3'
     msg['X-Mailer'] = 'Metals Daily Reporter'
 
-    # HTML正文
+    # HTML正文 with CID inline images
     html_part = MIMEMultipart('related')
+
+    # Rebuild comparison images as CID inline from _COMPARISON_CID_FILES
+    cids_used = set()
+    for cid, b64, fname in _COMPARISON_CID_FILES:
+        if cid in cids_used:
+            continue
+        cids_used.add(cid)
+        try:
+            img_data = base64.b64decode(b64)
+            img = MIMEImage(img_data, _subtype='png')
+            img.add_header('Content-ID', f'<{cid}>')
+            img.add_header('Content-Disposition', 'inline', filename=fname)
+            html_part.attach(img)
+        except Exception:
+            pass  # skip broken b64
+
     html_part.attach(MIMEText(html_content, 'html', 'utf-8'))
     msg.attach(html_part)
 
-    # 附件
+    # Regular attachments (chart PNGs for download)
     for filepath in attachments:
         if filepath and filepath.exists():
             with open(filepath, 'rb') as f:
