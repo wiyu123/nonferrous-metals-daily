@@ -80,7 +80,7 @@ metals:
   smm_url: https://hq.smm.cn/lithium
   inventory: 广期所仓单累至5.6万吨历史新高,社会库存9.9万吨延续去库
   supply_demand: 青海盐湖集中检修供给收缩,6月锂电排产环比+7.6%,仓单压制现货短期偏弱震荡
-- name: 工业硅
+- name: 工业硅(553#)
   symbol: SI
   sina_code: SI0
   eastmoney_secid: null
