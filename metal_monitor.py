@@ -1703,22 +1703,30 @@ def main():
 
         # 单品种图表已移除（仅保留对比图）
 
-    # 5. 生成对比图（A/B分家，每组最多5品种）
+    # 5. 生成对比图（A/B分家，先按5日涨跌幅排序，每组最多6品种）
     logger.info('生成价格对比图...')
-    futures_data = [m for m in metals_data if m.get('source') == 'shfe_futures']
-    small_data = [m for m in metals_data if m.get('source') == 'stock_proxy']
+    sort_key = lambda m: (m.get('change_5d') if m.get('change_5d') is not None else -999,
+                          m.get('change_short') if m.get('change_short') is not None else -999)
+    futures_data = sorted(
+        [m for m in metals_data if m.get('source') == 'shfe_futures'],
+        key=sort_key, reverse=True
+    )
+    small_data = sorted(
+        [m for m in metals_data if m.get('source') == 'stock_proxy'],
+        key=sort_key, reverse=True
+    )
 
     comparison_b64_list_a = []
     comparison_b64_list_b = []
 
     if futures_data:
-        paths = generate_comparison_charts_grouped(futures_data, long_period, font, group_size=5, prefix="a")
+        paths = generate_comparison_charts_grouped(futures_data, long_period, font, group_size=6, prefix="a")
         for p in paths:
             comparison_b64_list_a.append(image_to_base64(p))
             chart_files.append(p)
 
     if small_data:
-        paths = generate_comparison_charts_grouped(small_data, long_period, font, group_size=5, prefix="b")
+        paths = generate_comparison_charts_grouped(small_data, long_period, font, group_size=6, prefix="b")
         for p in paths:
             comparison_b64_list_b.append(image_to_base64(p))
             chart_files.append(p)
