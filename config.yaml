@@ -42,8 +42,8 @@ metals:
   unit: 元/吨
   source: shfe_futures
   smm_url: https://hq.smm.cn/nickel
-  inventory: LME镍库存持续累积，处于近两年高位
-  supply_demand: 印尼NPI产量大增，不锈钢排产高位但增速放缓，新能源用镍增量，供需偏松
+  inventory: LME镍库存3月触顶40万吨后持续去化中至约27万吨，绝对量仍高位
+  supply_demand: 印尼镍矿配额同比削减约30%，NPI增速放缓部分减产，不锈钢排产高位但增速收窄，新能源用镍需求增量
 - name: 锡
   symbol: SN
   sina_code: SN0
