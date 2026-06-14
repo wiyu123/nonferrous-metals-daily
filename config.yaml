@@ -80,6 +80,33 @@ metals:
   smm_url: https://hq.smm.cn/lithium
   inventory: 仓单累至5.6万吨创新高，社会库存约9.9万吨去化
   supply_demand: 盐湖检修供给收缩，储能+锂电排产高位，但高仓单压制现货，供需紧平衡
+- name: 工业硅
+  symbol: SI
+  sina_code: SI0
+  eastmoney_secid: null
+  unit: 元/吨
+  source: shfe_futures
+  smm_url: https://hq.smm.cn/silicon
+  inventory: 仓单持续去化至4.2万吨，港口库存下降
+  supply_demand: 多晶硅减产但有机硅低位补库，西南丰水期复产增量压制上方
+- name: 钒
+  symbol: V
+  sina_code: V0
+  eastmoney_secid: null
+  unit: 元/吨
+  source: shfe_futures
+  smm_url: https://hq.smm.cn/vanadium
+  inventory: 五氧化二钒库存低位，片钒流通偏紧
+  supply_demand: 全钒液流电池储能招标放量，螺纹钢新国标推钒需求增量，南非供给扰动频繁
+- name: 铂金
+  symbol: PL
+  sina_code: PL0
+  eastmoney_secid: null
+  unit: 元/克
+  source: shfe_futures
+  smm_url: https://hq.smm.cn/platinum
+  inventory: NYMEX铂库存低位，ETF持仓稳定
+  supply_demand: 氢能电解槽/燃料电池催化剂需求，南非电力危机限产30%，汽车尾气催化(国六b)稳需求
 - name: 锆
   symbol: ZR
   sina_code: null
@@ -130,6 +157,66 @@ metals:
   smm_url: https://hq.smm.cn/indium
   inventory: 铟库存低位，现货流通偏紧
   supply_demand: 锌冶炼平稳粗铟产出稳定，光芯片+6G需求驱动，供需紧平衡
+- name: 稀土
+  symbol: RE
+  sina_code: null
+  eastmoney_secid: null
+  sina_stock_code: sh600111
+  unit: 元/吨（氧化镨钕现货）
+  source: stock_proxy
+  smm_url: https://hq.smm.cn/rare-earth
+  inventory: 分离厂库存低位，缅甸矿进口恢复缓慢
+  supply_demand: 新能源车+风电磁材需求高增，出口管制收紧，指标增量有限
+- name: 钯金
+  symbol: PD
+  sina_code: null
+  eastmoney_secid: null
+  sina_stock_code: sh600459
+  unit: 元/克（钯金>=99.95%）
+  source: stock_proxy
+  smm_url: https://hq.smm.cn/palladium
+  inventory: NYMEX钯库存低位去化
+  supply_demand: 俄罗斯诺镍(Nornickel)减产，占全球40%，汽车尾气催化需求稳，供给高度集中
+- name: 电解锰
+  symbol: MN
+  sina_code: null
+  eastmoney_secid: null
+  sina_stock_code: sz002125
+  unit: 元/吨（电解锰>=99.7%）
+  source: stock_proxy
+  smm_url: https://hq.smm.cn/manganese
+  inventory: 锰厂库存偏高，去库偏慢
+  supply_demand: 磷酸锰铁锂正极需求增量，锰基电池技术迭代，钢铁脱氧剂需求平稳
+- name: 镓
+  symbol: GA
+  sina_code: null
+  eastmoney_secid: null
+  sina_stock_code: sh600459
+  unit: 元/千克（金属镓>=99.99%）
+  source: stock_proxy
+  smm_url: https://hq.smm.cn/gallium
+  inventory: 出口管制收紧，海外库存紧张
+  supply_demand: 第三代半导体(氮化镓)爆发，卫星/光模块需求倍增，与锗同为出口管制品种
+- name: 铋
+  symbol: BI
+  sina_code: null
+  eastmoney_secid: null
+  sina_stock_code: sz000960
+  unit: 元/吨（精铋>=99.99%）
+  source: stock_proxy
+  smm_url: https://hq.smm.cn/bismuth
+  inventory: 精铋库存低位，现货流通偏紧
+  supply_demand: 低温超导概念催化，半导体封装+医药中间体需求稳，铅锌冶炼副产品产出收缩
+- name: 碲
+  symbol: TE
+  sina_code: null
+  eastmoney_secid: null
+  sina_stock_code: sh600497
+  unit: 元/千克（精碲>=99.99%）
+  source: stock_proxy
+  smm_url: https://hq.smm.cn/tellurium
+  inventory: 碲库存极低，供给高度稀缺
+  supply_demand: 碲化镉薄膜光伏电池(N型光伏)放量，铜冶炼副产供给刚性，先进半导体需求
 - name: 锑
   symbol: SB
   sina_code: null
@@ -195,9 +282,3 @@ email:
   recipients:
   - 356487812@qq.com
   subject_prefix: 【有色金属行业动态】
-  # 阿里云DM mode (smtpdm.aliyun.com)
-  # smtp_server: smtpdm.aliyun.com
-  # smtp_port: 465
-  # use_ssl: true
-  # sender: noreply@notice.example.com
-  # password: your_aliyun_smtp_password
