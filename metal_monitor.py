@@ -1217,9 +1217,9 @@ def _gen_overview(metals_data: list) -> str:
     return (
         '<div style="background:linear-gradient(135deg,#f5f7fa 0%,#e8ecf1 100%);'
         'border-radius:10px;padding:20px;margin:15px 0;border:1px solid #d0d5dd">'
-        '<h3 style="color:#1a1a2e;margin-top:0;font-size:16px">&#x1f4ca; 本周市场概览</h3>'
+        '<h3 style="color:#1a1a2e;margin-top:0;font-size:16px">&#x1f4ca; 近一周市场概览</h3>'
         f'<p style="font-size:14px;line-height:1.8;color:#333">'
-        f'本周有色金属板块整体呈现<strong style="color:{mood_clr}">{mood}调整</strong>态势，'
+        f'近一周有色金属板块整体呈现<strong style="color:{mood_clr}">{mood}调整</strong>态势，'
         f'受宏观预期与供需变化影响，多数品种出现不同程度波动。</p>'
         f'<p style="font-size:13px;line-height:1.6;color:#555;margin:10px 0 5px 0">'
         f'<span style="color:#DC143C;font-weight:bold">▲ 上涨品种（{len(up)}个）：</span>{up_names}'
