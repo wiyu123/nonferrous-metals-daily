@@ -39,6 +39,7 @@ jobs:
           SMTP_SSL: ${{ secrets.SMTP_SSL }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
 
       - name: 提交更新后的缓存
         if: always()
