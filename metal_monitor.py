@@ -573,22 +573,30 @@ def _parse_tonghuashun_article(url: str, unit: str = '元/吨') -> list:
 
 
 def _auto_extend_spot_cache():
-    """自动将缓存中所有品种的最新数据延续到今天（若缺失）。"""
+    """自动补齐缓存中所有品种自最后日期到今天的缺失日期。"""
     cache = load_spot_cache()
     if not cache:
         return
-    today_str = datetime.now().strftime('%Y-%m-%d')
+    today = datetime.now().date()
     modified = False
     for sym, data in cache.items():
         if not data:
             continue
         data.sort(key=lambda x: x['date'])
-        last_date = data[-1]['date']
-        if last_date < today_str:
-            last_close = data[-1]['close']
-            data.append({'date': today_str, 'close': last_close, 'pct_chg': 0})
-            logger.debug(f'  自动延展 {sym}: {last_date} -> {today_str} (沿用 {last_close})')
-            modified = True
+        last_date_str = data[-1]['date']
+        last_dt = datetime.strptime(last_date_str, '%Y-%m-%d').date()
+        last_close = data[-1]['close']
+        # 逐日补齐从 last_dt+1 到 today
+        cur = last_dt + timedelta(days=1)
+        while cur <= today:
+            cur_str = cur.strftime('%Y-%m-%d')
+            if not any(d['date'] == cur_str for d in data):
+                data.append({'date': cur_str, 'close': last_close, 'pct_chg': 0})
+                modified = True
+            cur += timedelta(days=1)
+        if data[-1]['date'] != last_date_str:
+            added = sum(1 for d in data if d['date'] > last_date_str)
+            logger.debug('  延展 %s: %s -> %s (+%d天)' % (sym, last_date_str, data[-1]['date'], added))
     if modified:
         save_spot_cache(cache)
 
@@ -1647,6 +1655,9 @@ def main():
     # A组期货需要3个月K线(+MA60)，B组只需要30天现货
     fetch_limit_futures = 75  # 3 months of trading days
     fetch_limit_spot = long_period + 15
+
+    # 提前延展B组缓存到今日（避免周末节假日缓存滞后）
+    _auto_extend_spot_cache()
 
     logger.info(
         f'开始获取 {len(config["metals"])} 个品种的价格数据...'
