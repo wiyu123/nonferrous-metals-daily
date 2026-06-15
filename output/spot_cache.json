@@ -159,158 +159,127 @@
   "GE": [
     {
       "date": "2026-05-06",
-      "close": 19100,
-      "pct_chg": 0
+      "close": 19100
     },
     {
       "date": "2026-05-07",
-      "close": 19300,
-      "pct_chg": 0
+      "close": 19100
     },
     {
       "date": "2026-05-08",
-      "close": 19500,
-      "pct_chg": 0
+      "close": 19200
     },
     {
       "date": "2026-05-09",
-      "close": 19800,
-      "pct_chg": 0
+      "close": 19500
     },
     {
       "date": "2026-05-12",
-      "close": 20200,
-      "pct_chg": 0
+      "close": 19800
     },
     {
       "date": "2026-05-13",
-      "close": 20500,
-      "pct_chg": 0
+      "close": 20000
     },
     {
       "date": "2026-05-14",
-      "close": 20800,
-      "pct_chg": 0
+      "close": 20300
     },
     {
       "date": "2026-05-15",
-      "close": 21000,
-      "pct_chg": 0
+      "close": 20450
     },
     {
       "date": "2026-05-16",
-      "close": 21200,
-      "pct_chg": 0
+      "close": 20500
     },
     {
       "date": "2026-05-19",
-      "close": 21500,
-      "pct_chg": 0
+      "close": 20600
     },
     {
       "date": "2026-05-20",
-      "close": 21800,
-      "pct_chg": 0
+      "close": 20700
     },
     {
       "date": "2026-05-21",
-      "close": 22200,
-      "pct_chg": 0
+      "close": 20750
     },
     {
       "date": "2026-05-22",
-      "close": 22500,
-      "pct_chg": 0
+      "close": 20800
     },
     {
       "date": "2026-05-23",
-      "close": 22800,
-      "pct_chg": 0
+      "close": 20800
     },
     {
       "date": "2026-05-26",
-      "close": 23000,
-      "pct_chg": 0
+      "close": 20850
     },
     {
       "date": "2026-05-27",
-      "close": 23500,
-      "pct_chg": 0
+      "close": 20900
     },
     {
       "date": "2026-05-28",
-      "close": 24000,
-      "pct_chg": 0
+      "close": 20900
     },
     {
       "date": "2026-05-29",
-      "close": 24500,
-      "pct_chg": 0
+      "close": 20900
     },
     {
       "date": "2026-05-30",
-      "close": 24800,
-      "pct_chg": 0
+      "close": 20900
     },
     {
       "date": "2026-06-02",
-      "close": 25000,
-      "pct_chg": 0
+      "close": 20950
     },
     {
       "date": "2026-06-03",
-      "close": 24500,
-      "pct_chg": 0
+      "close": 21000
     },
     {
       "date": "2026-06-04",
-      "close": 24000,
-      "pct_chg": 0
+      "close": 21050
     },
     {
       "date": "2026-06-05",
-      "close": 23000,
-      "pct_chg": 0
+      "close": 21100
     },
     {
       "date": "2026-06-08",
-      "close": 22000,
-      "pct_chg": 0
+      "close": 21200
     },
     {
       "date": "2026-06-09",
-      "close": 20500,
-      "pct_chg": 0
+      "close": 21400
     },
     {
       "date": "2026-06-10",
-      "close": 20000,
-      "pct_chg": 0
+      "close": 21800
     },
     {
       "date": "2026-06-11",
-      "close": 19500,
-      "pct_chg": 0
+      "close": 22200
     },
     {
       "date": "2026-06-12",
-      "close": 18000,
-      "pct_chg": 0
+      "close": 22800
     },
     {
       "date": "2026-06-13",
-      "close": 17200,
-      "pct_chg": 0
+      "close": 23000
     },
     {
       "date": "2026-06-14",
-      "close": 16800,
-      "pct_chg": 0
+      "close": 23200
     },
     {
       "date": "2026-06-15",
-      "close": 16700,
-      "pct_chg": 0
+      "close": 23350
     }
   ],
   "W": [
