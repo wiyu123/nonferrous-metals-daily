@@ -1,0 +1,45 @@
+name: 小金属现货价格抓取
+
+on:
+  schedule:
+    # UTC = 北京时间 - 8
+    - cron: '0 1 * * 1-5'    # 北京时间 09:00 (早盘)
+    - cron: '0 5 * * 1-5'    # 北京时间 13:00 (午间)
+    - cron: '0 8 * * 1-5'    # 北京时间 16:00 (收盘后)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖
+        run: pip install ddgs PyYAML requests
+
+      - name: 抓取现货价格
+        run: python spot_fetcher.py
+
+      - name: 提交更新
+        if: always()
+        run: |
+          git config user.name "Spot Fetcher"
+          git config user.email "spot@metals.local"
+          git add output/spot_cache.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "无新价格，跳过提交"
+          else
+            git commit -m "Spot: update minor metal prices $(date +%Y%m%d-%H%M)"
+            git push
+          fi
